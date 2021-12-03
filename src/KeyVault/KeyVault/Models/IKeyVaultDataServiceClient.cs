@@ -40,11 +40,11 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
 
         PSDeletedKeyVaultKey GetDeletedKey(string managedHsmName, string keyName);
 
+        IEnumerable<PSDeletedKeyVaultKeyIdentityItem> GetDeletedKeys(KeyVaultObjectFilterOptions options);
+
         IEnumerable<PSKeyVaultKeyIdentityItem> GetKeys(KeyVaultObjectFilterOptions options);
 
         IEnumerable<PSKeyVaultKeyIdentityItem> GetKeyVersions(KeyVaultObjectFilterOptions options);
-
-        IEnumerable<PSDeletedKeyVaultKeyIdentityItem> GetDeletedKeys(KeyVaultObjectFilterOptions options);
 
         PSKeyVaultKey ImportKey(string vaultName, string keyName, PSKeyVaultKeyAttributes keyAttributes, JsonWebKey webKey, bool? importToHsm);
 
@@ -59,6 +59,15 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
         PSKeyVaultKey RecoverKey(string vaultName, string keyName);
 
         PSKeyVaultKey RestoreKey(string vaultName, string inputBlobPath);
+
+        #region Key rotation
+        PSKeyVaultKey RotateKey(string vaultName, string keyName);
+
+        PSKeyRotationPolicy GetKeyRotationPolicy(string vaultName, string keyName);
+
+        PSKeyRotationPolicy UpdateKeyRotationPolicy(string vaultName, string keyName, string ExpiresIn);
+        #endregion
+
         #endregion
 
         #region Managed Hsm key actions
@@ -96,6 +105,15 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
         PSKeyVaultKey RecoverManagedHsmKey(string managedHsmName, string keyName);
 
         PSKeyVaultKey RestoreManagedHsmKey(string managedHsmName, string inputBlobPath);
+
+        #region Key rotation
+        PSKeyVaultKey RotateManagedHsmKey(string vaultName, string keyName);
+
+        PSKeyRotationPolicy GetManagedHsmKeyRotationPolicy(string vaultName, string keyName);
+
+        PSKeyRotationPolicy UpdateManagedHsmKeyRotationPolicy(string vaultName, string keyName, string ExpiresIn);
+        #endregion
+
         #endregion
 
         #region Secret actions

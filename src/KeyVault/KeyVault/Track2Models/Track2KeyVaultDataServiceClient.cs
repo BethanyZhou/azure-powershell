@@ -82,6 +82,11 @@ namespace Microsoft.Azure.Commands.KeyVault.Track2Models
             throw new NotImplementedException();
         }
 
+        public PSKeyRotationPolicy GetKeyRotationPolicy(string vaultName, string keyName)
+        {
+            return VaultClient.GetKeyRotationPolicy(vaultName, keyName);
+        }
+
         public IEnumerable<PSKeyVaultKeyIdentityItem> GetKeyVersions(KeyVaultObjectFilterOptions options)
         {
             throw new NotImplementedException();
@@ -116,9 +121,19 @@ namespace Microsoft.Azure.Commands.KeyVault.Track2Models
             throw new NotImplementedException();
         }
 
+        public PSKeyVaultKey RotateKey(string vaultName, string x)
+        {
+            VaultClient.RotateKey(vaultName, x);
+            throw new NotImplementedException();
+        }
+
         public PSKeyVaultKey UpdateKey(string vaultName, string keyName, string keyVersion, PSKeyVaultKeyAttributes keyAttributes)
         {
             throw new NotImplementedException();
+        }
+        public PSKeyRotationPolicy UpdateKeyRotationPolicy(string vaultName, string keyName, string ExpiresIn)
+        {
+            return VaultClient.UpdateKeyRotationPolicy(vaultName, keyName, ExpiresIn);
         }
 
         #endregion
@@ -558,6 +573,23 @@ namespace Microsoft.Azure.Commands.KeyVault.Track2Models
         public PSKeyVaultKey RestoreManagedHsmKey(string managedHsmName, string inputBlobPath)
         {
             return HsmClient.RestoreKey(managedHsmName, inputBlobPath);
+        }
+        #endregion
+
+        #region Key rotation
+        public PSKeyVaultKey RotateManagedHsmKey(string managedHsmName, string keyName)
+        {
+            return HsmClient.RotateKey(managedHsmName, keyName);
+        }
+
+        public PSKeyRotationPolicy GetManagedHsmKeyRotationPolicy(string managedHsmName, string keyName)
+        {
+            return HsmClient.GetKeyRotationPolicy(managedHsmName, keyName);
+        }
+
+        public PSKeyRotationPolicy UpdateManagedHsmKeyRotationPolicy(string managedHsmName, string keyName, string ExpiresIn)
+        {
+            return HsmClient.UpdateKeyRotationPolicy(managedHsmName, keyName, ExpiresIn);
         }
         #endregion
 

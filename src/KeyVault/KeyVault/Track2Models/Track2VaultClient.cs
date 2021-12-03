@@ -150,5 +150,46 @@ namespace Microsoft.Azure.Commands.KeyVault.Track2Models
         }
 
         #endregion
+
+        #region Key rotation actions
+
+        internal PSKeyVaultKey RotateKey(string vaultName, string keyName)
+        {
+            var client = CreateKeyClient(vaultName);
+            return RotateKey(client, keyName);
+        }
+
+        private PSKeyVaultKey RotateKey(KeyClient client, string keyName)
+        {
+            return new PSKeyVaultKey(client.RotateKey(keyName), _vaultUriHelper);
+        }
+
+        internal PSKeyRotationPolicy GetKeyRotationPolicy(string vaultName, string keyName)
+        {
+            var client = CreateKeyClient(vaultName);
+            return GetKeyRotationPolicy(client, keyName);
+        }
+
+        private PSKeyRotationPolicy GetKeyRotationPolicy(KeyClient client, string keyName)
+        {
+            return new PSKeyRotationPolicy(client.GetKeyRotationPolicy(keyName));
+        }
+
+        internal PSKeyRotationPolicy UpdateKeyRotationPolicy(string vaultName, string keyName, string ExpiresIn)
+        {
+            var client = CreateKeyClient(vaultName);
+            return UpdateKeyRotationPolicy(client, keyName, ExpiresIn);
+        }
+
+        private PSKeyRotationPolicy UpdateKeyRotationPolicy(KeyClient client, string keyName, string ExpiresIn)
+        {
+            var policy = new KeyRotationPolicy()
+            {
+                ExpiresIn = TimeSpan.Parse(ExpiresIn)
+            };
+            return new PSKeyRotationPolicy(client.UpdateKeyRotationPolicy(keyName, policy));
+        }
+
+        #endregion
     }
 }
