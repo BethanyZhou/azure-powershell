@@ -421,6 +421,25 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
             return new PSKeyVaultKey(keyBundle, this.vaultUriHelper);
         }
 
+        #region Key Rotation
+        public PSKeyVaultKey RotateKey(string vaultName, string keyName)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public PSKeyRotationPolicy GetKeyRotationPolicy(string vaultName, string keyName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PSKeyRotationPolicy UpdateKeyRotationPolicy(string vaultName, string keyName, TimeSpan ExpiresIn)
+        {
+            throw new NotImplementedException();
+
+        }
+        #endregion
+
         #endregion
 
         #region Secret actions
@@ -2184,6 +2203,25 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
         {
             throw new NotImplementedException("Wrapping keys on managed HSM is only possible in track 2 SDK.");
         }
+
+        #region Key rotation
+        public PSKeyVaultKey RotateManagedHsmKey(string vaultName, string keyName)
+        {
+            throw new NotImplementedException("Rotating keys on managed HSM is only possible in track 2 SDK.");
+
+        }
+
+        public PSKeyRotationPolicy GetManagedHsmKeyRotationPolicy(string vaultName, string keyName)
+        {
+            throw new NotImplementedException("Getting key rotation policies on managed HSM is only possible in track 2 SDK.");
+        }
+
+        public PSKeyRotationPolicy UpdateManagedHsmKeyRotationPolicy(string vaultName, string keyName, TimeSpan ExpiresIn)
+        {
+            throw new NotImplementedException("Updating key rotation policies on managed HSM is only possible in track 2 SDK.");
+        }
+        #endregion
+
         #endregion
     }
 }

@@ -494,6 +494,45 @@ namespace Microsoft.Azure.Commands.KeyVault.Track2Models
         }
         #endregion
 
+        #region Key rotation
+        internal PSKeyVaultKey RotateKey(string managedHsmName, string keyName)
+        {
+            var client = CreateKeyClient(managedHsmName);
+            return RotateKey(client, keyName);
+        }
+
+        private PSKeyVaultKey RotateKey(KeyClient client, string keyName)
+        {
+            return new PSKeyVaultKey(client.RotateKey(keyName), _uriHelper);
+        }
+
+        internal PSKeyRotationPolicy GetKeyRotationPolicy(string managedHsmName, string keyName)
+        {
+            var client = CreateKeyClient(managedHsmName);
+            return GetKeyRotationPolicy(client, managedHsmName, keyName);
+        }
+
+        private PSKeyRotationPolicy GetKeyRotationPolicy(KeyClient client, string managedHsmName, string keyName)
+        {
+            return new PSKeyRotationPolicy(client.GetKeyRotationPolicy(keyName), managedHsmName, keyName);
+        }
+
+        internal PSKeyRotationPolicy UpdateKeyRotationPolicy(string managedHsmName, string keyName, TimeSpan ExpiresIn)
+        {
+            var client = CreateKeyClient(managedHsmName);
+            return UpdateKeyRotationPolicy(client, managedHsmName, keyName, ExpiresIn);
+        }
+
+        private PSKeyRotationPolicy UpdateKeyRotationPolicy(KeyClient client, string managedHsmName, string keyName, TimeSpan ExpiresIn)
+        {
+            var policy = new KeyRotationPolicy()
+            {
+                ExpiresIn = ExpiresIn
+            };
+            return new PSKeyRotationPolicy(client.UpdateKeyRotationPolicy(keyName, policy), managedHsmName, keyName);
+        }
+        #endregion
+
         #region Full backup restore
         public KeyVaultBackupResult BackupHsm(string hsmName, Uri blobStorageUri, string sasToken)
         {

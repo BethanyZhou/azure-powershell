@@ -121,6 +121,23 @@ namespace Microsoft.Azure.Commands.KeyVault.Track2Models
             throw new NotImplementedException();
         }
 
+        #region Key rotation
+        public PSKeyVaultKey RotateKey(string vaultName, string keyName)
+        {
+            return VaultClient.RotateKey(vaultName, keyName);
+        }
+
+        public PSKeyRotationPolicy GetKeyRotationPolicy(string vaultName, string keyName)
+        {
+            return VaultClient.GetKeyRotationPolicy(vaultName, keyName);
+        }
+
+        public PSKeyRotationPolicy UpdateKeyRotationPolicy(string vaultName, string keyName, TimeSpan ExpiresIn)
+        {
+            return VaultClient.UpdateKeyRotationPolicy(vaultName, keyName, ExpiresIn);
+        }
+        #endregion
+
         #endregion
 
         #region Certificate actions
@@ -558,6 +575,23 @@ namespace Microsoft.Azure.Commands.KeyVault.Track2Models
         public PSKeyVaultKey RestoreManagedHsmKey(string managedHsmName, string inputBlobPath)
         {
             return HsmClient.RestoreKey(managedHsmName, inputBlobPath);
+        }
+        #endregion
+
+        #region Key rotation
+        public PSKeyVaultKey RotateManagedHsmKey(string managedHsmName, string keyName)
+        {
+            return HsmClient.RotateKey(managedHsmName, keyName);
+        }
+
+        public PSKeyRotationPolicy GetManagedHsmKeyRotationPolicy(string managedHsmName, string keyName)
+        {
+            return HsmClient.GetKeyRotationPolicy(managedHsmName, keyName);
+        }
+
+        public PSKeyRotationPolicy UpdateManagedHsmKeyRotationPolicy(string managedHsmName, string keyName, TimeSpan ExpiresIn)
+        {
+            return HsmClient.UpdateKeyRotationPolicy(managedHsmName, keyName, ExpiresIn);
         }
         #endregion
 
