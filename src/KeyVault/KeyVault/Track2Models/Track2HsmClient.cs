@@ -503,7 +503,7 @@ namespace Microsoft.Azure.Commands.KeyVault.Track2Models
 
         private PSKeyVaultKey RotateKey(KeyClient client, string keyName)
         {
-            return new PSKeyVaultKey(client.RotateKey(keyName), _uriHelper);
+            return new PSKeyVaultKey(client.RotateKey(keyName), _uriHelper, isHsm: true);
         }
 
         internal PSKeyRotationPolicy GetKeyRotationPolicy(string managedHsmName, string keyName)

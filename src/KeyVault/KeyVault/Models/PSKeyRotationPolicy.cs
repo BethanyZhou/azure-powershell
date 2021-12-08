@@ -28,7 +28,6 @@ namespace Microsoft.Azure.Commands.KeyVault.Models
         //     Gets the identifier of the Azure.Security.KeyVault.Keys.KeyRotationPolicy.
         public string Id { get; set; }
 
-
         public string VaultName { get; set; }
 
         public string KeyName { get; set; }
