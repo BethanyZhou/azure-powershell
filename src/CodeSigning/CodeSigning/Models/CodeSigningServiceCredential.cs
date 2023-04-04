@@ -18,10 +18,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.Commands.Common.Authentication.Abstractions;
 using Microsoft.Rest;
+using Azure.Core;
+using System.Threading;
 
 namespace Microsoft.Azure.Commands.CodeSigning.Models
 {
-    internal class CodeSigningServiceCredential
+    internal class CodeSigningServiceCredential: TokenCredential
     {
         private readonly IAuthenticationFactory _authenticationFactory;
         private readonly IAzureContext _context;
@@ -102,7 +104,7 @@ namespace Microsoft.Azure.Commands.CodeSigning.Models
                 }
 
                 var accesstoken = authFactory.Authenticate(context.Account, context.Environment, tenantId, null, ShowDialog.Never,
-                    null, tokenCache,resourceIdEndpoint);
+                    null, tokenCache);
 
                 if (context.TokenCache != null && context.TokenCache.CacheData != null && context.TokenCache.CacheData.Length > 0)
                 {
@@ -117,6 +119,16 @@ namespace Microsoft.Azure.Commands.CodeSigning.Models
                 //throw new ArgumentException(CodeSigningProperties.Resources.InvalidSubscriptionState, ex);
                 throw new ArgumentException("",ex);
             }
+        }
+
+        public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
         }
     }
 }

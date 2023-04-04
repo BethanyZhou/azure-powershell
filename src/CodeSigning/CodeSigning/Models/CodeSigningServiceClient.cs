@@ -15,7 +15,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.CodeSigning;
-using Azure.Identity;
 using Microsoft.Azure.Commands.CodeSigning.Helpers;
 using Microsoft.Azure.Commands.Common.Authentication.Abstractions;
 using Azure.Core;
@@ -68,16 +67,16 @@ namespace Microsoft.Azure.Commands.CodeSigning.Models
             options.Diagnostics.IsLoggingEnabled = false;
             options.Diagnostics.IsLoggingContentEnabled = false;
 
-            TokenCredential user_creds;
+            //TokenCredential user_creds;
 
             var clientCred = new CodeSigningServiceCredential(authFactory, context, AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId);
             var tenantId = clientCred.TenantId;
-            user_creds = (TokenCredential)clientCred.GetAccessToken();           
-
+            var creds = clientCred.GetAccessToken();           
+/*
             CertificateProfileClient = new CertificateProfileClient(
                 user_creds,
                 new Uri(Metadata.Endpoint),
-                options);
+                options);*/
         }
                 
         public string GetCodeSigningEku(string accountName, string profileName, string endpoint)
